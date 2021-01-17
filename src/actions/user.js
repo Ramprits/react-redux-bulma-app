@@ -15,7 +15,7 @@ export const userLoginFail = (payload) => ({
 export const loginUser = (payload) => async (dispatch) => {
   try {
     dispatch(apiRequestStart());
-    const { data } = await axios.get("/users/login", payload);
+    const { data } = await axios.post("/users/login", payload);
     dispatch(loginUserSuccess(data));
     dispatch(apiRequestFinish());
   } catch (error) {
