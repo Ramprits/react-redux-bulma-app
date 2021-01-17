@@ -1,0 +1,1 @@
+export const ACCESS_DENIED = "ACCESS_DENIED";
