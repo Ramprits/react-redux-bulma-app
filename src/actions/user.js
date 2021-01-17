@@ -1,5 +1,6 @@
 import axios from "axios";
-import { userLoginTypes } from "../constants/user-types";
+import history from "../utils/history";
+import { userLoginTypes, userLogoutTypes } from "../constants/user-types";
 import { apiError, apiRequestFinish, apiRequestStart } from "./ui";
 
 export const loginUserSuccess = (payload) => ({
@@ -18,7 +19,14 @@ export const loginUser = (payload) => async (dispatch) => {
     const { data } = await axios.post("/users/login", payload);
     dispatch(loginUserSuccess(data));
     dispatch(apiRequestFinish());
+    localStorage.setItem("applicationToken", `Bearer ${data.token}`);
+    history.push("/");
   } catch (error) {
-    dispatch(apiError(error.response && error.response.data.error));
+    dispatch(apiError(error.response && error.response.data.errorMessage));
+    dispatch(apiRequestFinish());
   }
 };
+
+export const logout = () => ({
+  type: userLogoutTypes.USER_LOGOUT_SUCCESS
+});

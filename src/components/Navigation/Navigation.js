@@ -1,7 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { logout } from "../../actions/user";
 
 const Navigation = () => {
+  const history = useHistory();
+
+  const { isAuthenticated } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   return (
     <section>
       <nav className="navbar is-transparent py-3">
@@ -46,21 +52,36 @@ const Navigation = () => {
                 Features
               </Link>
             </div>
+
             <div className="navbar-end ml-0">
               <div className="navbar-item">
                 <div className="buttons">
-                  <Link
-                    className="button is-primary is-outlined"
-                    to="/auth/login"
-                  >
-                    Log In
-                  </Link>
-                  <Link
-                    className="button is-primary is-outlined"
-                    to="/auth/register"
-                  >
-                    Sign Up
-                  </Link>
+                  {isAuthenticated ? (
+                    <button
+                      className="button is-primary is-outlined"
+                      onClick={() => {
+                        dispatch(logout());
+                        history.push("/auth/login");
+                      }}
+                    >
+                      Log Out
+                    </button>
+                  ) : (
+                    <>
+                      <Link
+                        className="button is-primary is-outlined"
+                        to="/auth/login"
+                      >
+                        Log In
+                      </Link>
+                      <Link
+                        className="button is-primary is-outlined"
+                        to="/auth/register"
+                      >
+                        Sign Up
+                      </Link>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

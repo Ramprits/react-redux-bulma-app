@@ -1,4 +1,4 @@
-import { userLoginTypes } from "../constants/user-types";
+import { userLoginTypes, userLogoutTypes } from "../constants/user-types";
 
 const initialState = {
   currentUser: null,
@@ -8,10 +8,13 @@ const initialState = {
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case userLoginTypes.USER_LOGIN_SUCCESS:
-      return { ...state, currentUser: payload };
+      return { ...state, currentUser: payload, isAuthenticated: true };
 
     case userLoginTypes.USER_LOGIN_FAIL:
       return { ...state, currentUser: null, error: payload };
+
+    case userLogoutTypes.USER_LOGOUT_SUCCESS:
+      return { ...state, currentUser: null, isAuthenticated: false };
 
     default:
       return state;

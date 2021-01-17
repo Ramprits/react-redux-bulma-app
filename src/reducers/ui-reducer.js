@@ -5,19 +5,20 @@ const uiReducer = (state = initialState, action) => {
   switch (action.type) {
     case "API_START":
       return Object.assign({}, state, {
-        pendingRequests: state.pendingRequests + 1,
-        loading: true
+        loading: true,
+        error: "",
+        timestamp: Date.now()
       });
 
     case "API_FINISH":
       return Object.assign({}, state, {
-        pendingRequests: state.pendingRequests - 1,
-        loading: false
+        loading: false,
+        error: "",
+        timestamp: Date.now()
       });
 
     case "API_ERROR":
-      return { ...state, error: action.payload };
-
+      return { ...state, error: action.payload, timestamp: Date.now() };
     default:
       return state;
   }
