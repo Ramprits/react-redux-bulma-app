@@ -1,4 +1,8 @@
-import { userLoginTypes, userLogoutTypes } from "../constants/user-types";
+import {
+  userLoginTypes,
+  userLogoutTypes,
+  userRegisterTypes
+} from "../constants/user-types";
 
 const initialState = {
   currentUser: null,
@@ -8,9 +12,11 @@ const initialState = {
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case userLoginTypes.USER_LOGIN_SUCCESS:
+    case userRegisterTypes.USER_REGISTER_SUCCESS:
       return { ...state, currentUser: payload, isAuthenticated: true };
 
     case userLoginTypes.USER_LOGIN_FAIL:
+    case userRegisterTypes.USER_REGISTER_FAIL:
       return { ...state, currentUser: null, error: payload };
 
     case userLogoutTypes.USER_LOGOUT_SUCCESS:
@@ -20,3 +26,5 @@ export default (state = initialState, { type, payload }) => {
       return state;
   }
 };
+
+// Register user
